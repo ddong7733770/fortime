@@ -195,6 +195,15 @@ export function chartOf(p) {
   }
   const tgCount = Array(10).fill(0);
   Object.values(tens).forEach(t => { if (t.stem !== null) tgCount[t.stem]++; tgCount[t.branch]++; });
+  // 대표 십신: 개수만 세면 동률(약 43%)이 목록 순서(비견 먼저)로 갈려 엉뚱한 성향이 나옴
+  // → 자리 무게로 셈: 월지 3(월령) · 일지 1.5 · 나머지 지지 1 · 천간 1(월간 1.2), 동률이면 월지 → 일지 순
+  const tgWeight = Array(10).fill(0);
+  for (const [pos, t] of Object.entries(tens)) {
+    if (t.stem !== null) tgWeight[t.stem] += pos === 'month' ? 1.2 : 1;
+    tgWeight[t.branch] += pos === 'month' ? 3 : pos === 'day' ? 1.5 : 1;
+  }
+  const tieRank = i => (tens.month.branch === i ? 2 : 0) + (tens.day.branch === i ? 1 : 0);
+  const topTen = [...tgWeight.keys()].filter(i => tgWeight[i] > 0).sort((a, b) => tgWeight[b] - tgWeight[a] || tieRank(b) - tieRank(a) || a - b);
 
   // 신살
   const branches = Object.values(pillars).filter(Boolean).map(x => x.branch);
@@ -224,7 +233,7 @@ export function chartOf(p) {
     }
     daeun = { forward: fwd, start, list };
   }
-  const res = { male: gch === 'M' ? true : gch === 'F' ? false : null, pillars, dayStem: ds, me, count, gw, ratio, strength, yongG, yongEok, yongRule, johuStems: jList.stems, fav, johu, season, tens, tgCount, sal, daeun, solarHM, hasHour: !!hour, birthMs: ms };
+  const res = { male: gch === 'M' ? true : gch === 'F' ? false : null, pillars, dayStem: ds, me, count, gw, ratio, strength, yongG, yongEok, yongRule, johuStems: jList.stems, fav, johu, season, tens, tgCount, tgWeight, topTen, sal, daeun, solarHM, hasHour: !!hour, birthMs: ms };
   cache.set(key, res);
   return res;
 }

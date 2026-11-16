@@ -157,7 +157,7 @@ function yongBasisHTML(S, chart) {
   const list = (chart.johuStems || []).map(i => SJ.STEM_H[i]).join('·');
   return `<p class="lead-s">${esc(fmt(B[chart.yongRule], { season }))}</p><p class="yb-src">${esc(fmt(B.src, { d: SJ.STEM_H[chart.dayStem], m: SJ.BRANCH_H[chart.pillars.month.branch], list }))}</p>`;
 }
-export function lifeTexts(S, chart) {
+export function lifeTexts(S, chart, nowMs = Date.now()) {
   const T = S.life, ds = chart.dayStem, gw = chart.gw, tg = chart.tgCount, P = chart.pillars;
   const fav = g => SJ.elValue(chart, SJ.elOfGroup(ds, g)) >= 0;
   const posOf = g => ['year', 'month', 'day', 'hour'].filter(pos => chart.tens[pos] && ((chart.tens[pos].stem !== null && SJ.groupOf(chart.tens[pos].stem) === g) || SJ.groupOf(chart.tens[pos].branch) === g));
@@ -167,16 +167,30 @@ export function lifeTexts(S, chart) {
   const w = [];
   // 재물 그릇: 재성의 양(지장간 포함)과 그것을 감당할 내 힘(신강·신약)을 함께 봄
   const sg = chart.strength;
-  if (gw[2] < 0.35) w.push(T.wealth.noWealth);                                   // 무재: 겉으로 드러난 재성이 없음
-  else if (sg <= -1 && gw[2] >= 2.45) w.push(T.wealth.strongUnfav);               // 재다신약
-  else if (sg <= -1 && gw[2] >= 1.54) w.push(T.wealth.mid);                       // 재물 자리는 있으나 지키는 힘이 먼저
-  else if (sg >= 0 && gw[2] >= 1.54) w.push(T.wealth.strongFav);                  // 신왕재왕
-  else if (sg >= 0 && gw[1] >= 1.54) w.push(T.wealth.output);                     // 식상생재
-  else w.push(T.wealth.weak);
-  if (tg[4] + tg[5] > 0) w.push(tg[4] > tg[5] ? T.wealth.pyeon : T.wealth.jeong);
+  const base = gw[2] < 0.35 ? 'noWealth'                      // 무재: 겉으로 드러난 재성이 없음
+    : sg <= -1 && gw[2] >= 2.45 ? 'strongUnfav'                // 재다신약 = 부옥빈인(돈 일·책임에 끌려다니고 손엔 안 남음)
+    : sg <= -1 && gw[2] >= 1.54 ? 'mid'                        // 재물 자리는 있으나 지키는 힘이 먼저
+    : sg >= 0 && gw[2] >= 1.54 ? 'strongFav'                   // 신왕재왕
+    : sg >= 0 && gw[1] >= 1.54 ? 'output'                      // 식상생재
+    : 'weak';
+  w.push(T.wealth[base]);
+  // 신약이거나 재성이 얇으면 '잘 모인다·큰돈 인연' 대신 들어오는 방식만 말함 (앞 문장과 모순 방지)
+  const soft = sg <= -1 || base === 'weak' || base === 'noWealth';
+  if (tg[4] + tg[5] > 0) w.push(tg[4] > tg[5] ? (soft ? T.wealth.pyeonSoft : T.wealth.pyeon) : (soft ? T.wealth.jeongSoft : T.wealth.jeong));
   const wp = posOf(2); if (wp.length) w.push(T.wealth.where[wp.includes('month') ? 'month' : wp[0]]);
   if (gw[0] >= 2.45 && sg >= 1) w.push(T.wealth.rob);                             // 군겁쟁재
-  if (Object.values(P).some(pl => pl && pl.branch === SJ.STORAGE[(SJ.STEM_EL[ds] + 2) % 5])) w.push(T.wealth.storage); // 재고
+  if (!soft && Object.values(P).some(pl => pl && pl.branch === SJ.STORAGE[(SJ.STEM_EL[ds] + 2) % 5])) w.push(T.wealth.storage); // 재고
+  // 지금 대운: 타고난 그릇만으로는 지금 형편을 못 설명함 → 현재 10년 흐름을 한 줄
+  if (chart.daeun && T.wealth.dae) {
+    const age = (nowMs - chart.birthMs) / (365.2425 * 864e5), L = chart.daeun.list;
+    const cur = L.find(g => age >= g.age && age < g.age + 10);
+    if (cur) {
+      const ev = SJ.evalGZ(chart, cur.stem, cur.branch, chart.male);
+      const grps = [SJ.groupOf(SJ.tenGod(ds, cur.stem)), SJ.groupOf(SJ.tenGodOfBranch(ds, cur.branch))];
+      const key = ev.val >= 0.8 ? 'fav' : ev.val <= -0.8 ? (sg < 0 && grps.some(g => g === 1 || g === 2) ? 'heavy' : 'bad') : 'mid';
+      w.push(fmt(T.wealth.dae[key], { gz: gzLabel(cur, S), age: Math.floor(cur.age) }));
+    }
+  }
   w.push(fmt(T.wealth.tip, { el: yEl, act: Y.act }));
   out.wealth = w;
   // 직장·사업운
@@ -227,7 +241,7 @@ function lifeHTML(S, chart) {
 export function overallTexts(S, chart, nowMs = Date.now(), O = null) {
   O = O || S.ov; const out = {};
   out.nature = S.dayMaster[chart.dayStem];
-  const top = [...chart.tgCount.keys()].filter(i => chart.tgCount[i] > 0).sort((a, b) => chart.tgCount[b] - chart.tgCount[a])[0];
+  const top = chart.topTen[0];
   const lackE = chart.count.findIndex(c => c === 0), manyE = chart.count.findIndex(c => c >= 3);
   const st = S.strength[chart.strength + 2][1].split(/(?<=[.。])\s*/).filter(Boolean); // 한국어·영어 '. ', 일본어·중국어 '。'
   out.strong = [S.tenTrait[top], st.slice(0, 2).join(' '), lackE >= 0 ? S.none[lackE] : manyE >= 0 ? S.many[manyE] : ''].filter(Boolean).join(' ');
@@ -282,7 +296,7 @@ export function sajuSections(S, chart, { O = null, overallTitle = null, nowMs = 
   const none = chart.count.map((c, i) => (c === 0 ? i : -1)).filter(i => i >= 0);
   const st = S.strength[chart.strength + 2];
   const Y = S.yong[chart.fav.yong];
-  const topTen = [...chart.tgCount.keys()].filter(i => chart.tgCount[i] > 0).sort((a, b) => chart.tgCount[b] - chart.tgCount[a]).slice(0, 2);
+  const topTen = chart.topTen.slice(0, 2);
   const sal = Object.entries(chart.sal).filter(([, v]) => v).map(([k]) => S.sinsal[k]);
   const age = (nowMs - chart.birthMs) / (365.2425 * 864e5);
   const dae = chart.daeun ? chart.daeun.list.map((g, i) => {

@@ -196,7 +196,7 @@ export function dohanSections(M, S, L, d, chart, now = new Date()) {
   const ws = MS.workStyle(chart);
   const style = [DH.style[ws.type], ws.close ? fmt(DH.style.mix, { t: DH.style.name[ws.second] }) : ''].filter(Boolean);
   // 2) 맞는 업종과 역할
-  const topTen = [...chart.tgCount.keys()].filter(i => chart.tgCount[i] > 0).sort((a, b) => chart.tgCount[b] - chart.tgCount[a])[0];
+  const topTen = chart.topTen[0];
   const fields = [`${fmt(DH.fields.lead, { el: S.el[Y] })} (${DH.fields.list[Y]})`, fmt(DH.fields.roleLine, { r: DH.fields.role[Y] }), fmt(DH.fields.strength, { t: tenName(S, topTen), trait: S.tenTrait[topTen] })];
   // 3) 보고·회의·계약 시간
   const wh = MS.workHours(chart, d);
