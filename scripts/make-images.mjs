@@ -52,6 +52,7 @@ const dialOf = async c => {
   await p2.close();
   return svg.replace(/width="\d+" height="\d+"/, 'width="420" height="420"');
 };
+const CLOVER = 'data:image/png;base64,' + fs.readFileSync(path.join(PUB, 'clover.png')).toString('base64'); // 로고: 네잎클로버
 for (const c of [...LANGS, 'default']) {
   const Lc = L[c] || L.ko, lc = c === 'default' ? 'ko' : c;
   const sub = c === 'default' ? '시운 時運' : Lc.subBrand;
@@ -63,7 +64,7 @@ for (const c of [...LANGS, 'default']) {
   await shot(`<div lang="${Lc.htmlLang}" style="width:1200px;height:630px;box-sizing:border-box;background:#FAF8F3;display:flex;align-items:center;gap:56px;padding:0 84px;position:relative">
 <div style="position:absolute;inset:26px;border:1.5px solid #E6E2D9;border-radius:22px"></div>
 <div style="flex:1;position:relative">
-<div style="display:flex;align-items:center;gap:22px"><span style="width:34px;height:34px;background:#B3261E;border-radius:6px;flex:none"></span><span style="font:700 104px/1 'Noto Serif CJK KR',serif;color:#1A1A1A;letter-spacing:.01em">${config.brand}</span></div>
+<div style="display:flex;align-items:center;gap:22px"><img src="${CLOVER}" style="width:92px;height:92px;flex:none;margin-right:-4px"><span style="font:700 104px/1 'Noto Serif CJK KR',serif;color:#1A1A1A;letter-spacing:.01em">${config.brand}</span></div>
 <div style="font:700 40px ${serif},serif;color:#6E6A62;margin:26px 0 0 56px">${sub}</div>
 <div style="width:72px;height:4px;background:#B3261E;margin:46px 0 0 56px;border-radius:2px"></div>
 <div style="font:700 42px/1.35 ${serif},serif;color:#1A1A1A;margin:34px 0 0 56px;word-break:keep-all">${tag}</div>
@@ -73,6 +74,7 @@ for (const c of [...LANGS, 'default']) {
 }
 srv.close();
 
-// 아이콘(public/icon-192.png · icon-512.png · favicon.svg)은 네잎클로버 그림으로 직접 관리합니다. 여기서 다시 만들지 않습니다.
+// 앱 아이콘(icon-192·512)과 파비콘은 네잎클로버 원본(public/clover.png)에서 만들어 둔 파일을 그대로 씀
+
 await browser.close();
 fs.rmSync(path.join(ROOT, '.shot.html'), { force: true });
