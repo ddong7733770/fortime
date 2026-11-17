@@ -73,10 +73,6 @@ for (const c of [...LANGS, 'default']) {
 }
 srv.close();
 
-// 앱 아이콘 — 인주(빨강) 도장 위 흰 '時'
-for (const s of [192, 512]) {
-  await shot(`<div style="width:${s}px;height:${s}px;display:grid;place-items:center;background:#FAF8F3"><div style="width:${s * 0.7}px;height:${s * 0.7}px;border-radius:${s * 0.12}px;background:#B3261E;display:grid;place-items:center;font:700 ${s * 0.46}px/1 'Noto Serif CJK KR',serif;color:#FFFFFF;padding-bottom:${s * 0.03}px;box-sizing:border-box">時</div></div>`, s, s, path.join(PUB, `icon-${s}.png`));
-}
-fs.writeFileSync(path.join(PUB, 'favicon.svg'), `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#B3261E"/><text x="32" y="45" text-anchor="middle" font-family="'Noto Serif KR','Noto Serif CJK KR',serif" font-weight="700" font-size="38" fill="#FFFFFF">時</text></svg>`);
+// 아이콘(public/icon-192.png · icon-512.png · favicon.svg)은 네잎클로버 그림으로 직접 관리합니다. 여기서 다시 만들지 않습니다.
 await browser.close();
 fs.rmSync(path.join(ROOT, '.shot.html'), { force: true });
