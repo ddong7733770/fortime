@@ -1,0 +1,27 @@
+{
+  "appId": "kr.fortime.app",
+  "appName": "forTime",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https",
+    "hostname": "app.fortime.kr"
+  },
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": true
+  },
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    },
+    "SystemBars": {
+      "insetsHandling": "css",
+      "initialViewportFitValueHint": "cover"
+    },
+    "SplashScreen": {
+      "launchShowDuration": 800,
+      "backgroundColor": "#ffffff",
+      "showSpinner": false
+    }
+  }
+}

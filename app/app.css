@@ -1,0 +1,21 @@
+/* 앱 전용 덧붙임 스타일 (사이트에는 들어가지 않음)
+   --ab : 화면 하단 AdMob 배너 높이(+제스처 바). 배너가 있는 동안 하단 탭·버튼을 그만큼 위로 올림 */
+html { --ab: 0px; }
+/* 앱에는 애드센스가 없으므로 페이지 안 광고 자리는 모두 숨김 (광고는 하단 AdMob 배너 1개) */
+.is-app .ad, .is-app .ad-mock { display: none !important; }
+.is-app .adgate-box .ad { display: none !important; }
+
+.has-ab:not(.ab-hidden) body { padding-bottom: var(--ab); }
+.has-ab:not(.ab-hidden) .tabs { bottom: var(--ab); padding-bottom: 6px; }
+.has-ab:not(.ab-hidden) .sticky-cta { bottom: var(--ab); padding-bottom: 12px; }
+.has-ab:not(.ab-hidden) .has-bnav .sticky-cta,
+.has-ab:not(.ab-hidden).has-bnav .sticky-cta { bottom: calc(var(--nav-h) + var(--ab)); }
+.has-ab:not(.ab-hidden) .toast { bottom: calc(96px + var(--ab)); }
+.has-ab:not(.ab-hidden) .has-bnav .toast,
+.has-ab:not(.ab-hidden).has-bnav .toast { bottom: calc(var(--nav-h) + 24px + var(--ab)); }
+.has-ab:not(.ab-hidden) .fab { bottom: calc(var(--nav-h) + 16px + var(--ab)); }
+.has-ab:not(.ab-hidden) .has-bnav .foot,
+.has-ab:not(.ab-hidden).has-bnav .foot { padding-bottom: calc(var(--nav-h) + 40px); }
+
+/* 앱에서는 길게 눌러 텍스트가 선택되거나 파란 터치 하이라이트가 생기지 않게 */
+.is-app body { -webkit-tap-highlight-color: transparent; }

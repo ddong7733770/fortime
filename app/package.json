@@ -1,0 +1,26 @@
+{
+  "name": "fortime-app",
+  "private": true,
+  "type": "module",
+  "description": "forTime 안드로이드 앱 — 저장소 루트의 사이트 소스로 만들고, 사이트 빌드에는 영향 없음",
+  "scripts": {
+    "site": "npm --prefix .. install --no-audit --no-fund && npm --prefix .. run build",
+    "www": "npm run site && node make-www.mjs",
+    "sync": "npm run www && npx cap sync android && node apply-android.mjs",
+    "open": "npx cap open android",
+    "run": "npm run sync && npx cap run android"
+  },
+  "dependencies": {
+    "@capacitor-community/admob": "^8.4.2",
+    "@capacitor/android": "^8.6.2",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/core": "^8.6.2",
+    "@capacitor/filesystem": "^8.1.5",
+    "@capacitor/share": "^8.0.3",
+    "@capacitor/splash-screen": "^8.0.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.6.2",
+    "esbuild": "^0.28.2"
+  }
+}
