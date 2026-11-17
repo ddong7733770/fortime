@@ -151,7 +151,7 @@ ${alts ? alts.map(a => `<link rel="alternate" hreflang="${a.hl}" href="${SITE}${
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${SITE}${canonical}">
-<meta property="og:image" content="${SITE}${ogImage || `/og/${lang in L ? lang : 'ko'}.png`}">
+<meta property="og:image" content="${SITE}${ogImage || `/og/${lang in L ? lang : 'ko'}.png?v=2`}">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta property="og:locale" content="${Lc.ogLocale}">
 <meta name="twitter:card" content="summary_large_image">

@@ -156,7 +156,7 @@ export default {
     '一年是十二次机会。记住你的好月份。',
     '丁未年的火是烛火。与其烧得大，不如点得久。',
   ],
-  card: { brand: 'forTime', site: 'fortuneintime.pages.dev', best: '最好的月份', color: '幸运色', saved: '卡片已保存。', making: '正在生成卡片…', shareText: '2027丁未年，我的关键词是？', shareBtn: '分享', saveBtn: '保存图片', close: '关闭', hold: '长按图片也可以保存。', saveHint: '在保存界面点“保存图片”，就会存到相册里。', fail: '卡片生成失败。请稍后再试。' },
+  card: { brand: 'forTime', site: 'fortime.kr', best: '最好的月份', color: '幸运色', saved: '卡片已保存。', making: '正在生成卡片…', shareText: '2027丁未年，我的关键词是？', shareBtn: '分享', saveBtn: '保存图片', close: '关闭', hold: '长按图片也可以保存。', saveHint: '在保存界面点“保存图片”，就会存到相册里。', fail: '卡片生成失败。请稍后再试。' },
   zodiacCta: '查看十二生肖2027年运势',
   guestCta: '用我的八字看2027年运势',
   kw: {

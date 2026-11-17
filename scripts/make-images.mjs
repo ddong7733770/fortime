@@ -31,21 +31,52 @@ async function shot(html, w, h, out, transparent = false) {
   console.log('✔', path.relative(ROOT, out));
 }
 
-// OG 이미지 1200×630 (언어별)
+// OG 이미지 1200×630 (언어별) — 지금 사이트 디자인 그대로: 한지 바탕 · 먹 글씨 · 인주(빨강) 포인트 · 첫 화면 십이지 시계
+// 시계는 빌드된 사이트(dist)의 첫 화면에서 그대로 가져옴 → `npm run build` 뒤에 실행
+import http from 'node:http';
+const DIST = path.join(ROOT, 'dist');
+const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp' };
+const srv = http.createServer((q, r) => {
+  let f = path.join(DIST, decodeURIComponent(q.url.split('?')[0]));
+  if (fs.existsSync(f) && fs.statSync(f).isDirectory()) f = path.join(f, 'index.html');
+  if (!fs.existsSync(f)) { r.writeHead(404); return r.end(); }
+  r.writeHead(200, { 'content-type': MIME[path.extname(f)] || 'application/octet-stream' }); fs.createReadStream(f).pipe(r);
+}).listen(0);
+const PORT = srv.address().port;
+const SERIF = { ko: "'Noto Serif CJK KR'", ja: "'Noto Serif CJK JP'", zh: "'Noto Serif CJK SC'" };
+const dialOf = async c => {
+  const p2 = await browser.newPage({ viewport: { width: 420, height: 900 } });
+  await p2.clock.setFixedTime(new Date('2026-06-15T12:40:00+09:00')); // 오시(午時) 한가운데
+  await p2.goto(`http://127.0.0.1:${PORT}/${c}/`, { waitUntil: 'networkidle' });
+  const svg = await p2.evaluate(() => document.querySelector('.now-dial svg')?.outerHTML || '');
+  await p2.close();
+  return svg.replace(/width="\d+" height="\d+"/, 'width="420" height="420"');
+};
 for (const c of [...LANGS, 'default']) {
-  const Lc = L[c] || L.ko;
-  const dial = dialSVG({ hours: [62, 70, 78, 84, 90, 95, 88, 80, 72, 66, 58, 54], labels: dialLabels(Lc), nowMin: 600, best: 5, size: 470, centerTop: Lc.ui.todayScore, centerMain: '95', centerSub: '/100' });
-  await shot(`<div style="width:1200px;height:630px;display:flex;align-items:center;gap:40px;padding:0 70px;box-sizing:border-box;background:#141B36" lang="${Lc.htmlLang}">
-<div style="flex:1"><div style="font:700 74px 'Gowun Batang',serif;color:#C9A24A">${config.brand}</div>
-<div style="font:700 40px ${c === 'ja' ? "'Shippori Mincho'" : c === 'zh' ? "'Noto Serif SC'" : "'Gowun Batang'"},serif;color:#E9E3D3;margin-top:18px">${Lc.subBrand}</div>
-<div style="font:500 30px system-ui,sans-serif;color:#B3AD9C;margin-top:22px;line-height:1.4">${Lc.tagline}</div></div>
-<div style="width:470px">${dial.replace('class="dial"', 'class="dial is-in"')}</div></div>`, 1200, 630, path.join(PUB, `og/${c === 'default' ? 'default' : c}.png`));
+  const Lc = L[c] || L.ko, lc = c === 'default' ? 'ko' : c;
+  const sub = c === 'default' ? '시운 時運' : Lc.subBrand;
+  // 줄바꿈이 단어 중간에 생기지 않게 (일본어는 단어 사이 띄어쓰기가 없어 직접 끊음)
+  const tag = c === 'default' ? 'Your fortune,<br>hour by hour' : lc === 'ja' ? Lc.tagline.replace('変わる', '変わる<br>') : Lc.tagline.replace(', ', ',<br>');
+  const serif = SERIF[lc] || "'Noto Serif CJK KR'";
+  const dial = await dialOf(lc);
+  const host = config.siteUrl.replace(/^https?:\/\//, '');
+  await shot(`<div lang="${Lc.htmlLang}" style="width:1200px;height:630px;box-sizing:border-box;background:#FAF8F3;display:flex;align-items:center;gap:56px;padding:0 84px;position:relative">
+<div style="position:absolute;inset:26px;border:1.5px solid #E6E2D9;border-radius:22px"></div>
+<div style="flex:1;position:relative">
+<div style="display:flex;align-items:center;gap:22px"><span style="width:34px;height:34px;background:#B3261E;border-radius:6px;flex:none"></span><span style="font:700 104px/1 'Noto Serif CJK KR',serif;color:#1A1A1A;letter-spacing:.01em">${config.brand}</span></div>
+<div style="font:700 40px ${serif},serif;color:#6E6A62;margin:26px 0 0 56px">${sub}</div>
+<div style="width:72px;height:4px;background:#B3261E;margin:46px 0 0 56px;border-radius:2px"></div>
+<div style="font:700 42px/1.35 ${serif},serif;color:#1A1A1A;margin:34px 0 0 56px;word-break:keep-all">${tag}</div>
+<div style="font:500 26px 'Noto Sans CJK KR',sans-serif;color:#8E1D17;margin:38px 0 0 56px;letter-spacing:.04em">${host}</div>
+</div>
+<div style="width:420px;height:420px;position:relative;flex:none">${dial}</div></div>`, 1200, 630, path.join(PUB, `og/${c === 'default' ? 'default' : c}.png`));
 }
+srv.close();
 
-// 앱 아이콘
+// 앱 아이콘 — 인주(빨강) 도장 위 흰 '時'
 for (const s of [192, 512]) {
-  await shot(`<div style="width:${s}px;height:${s}px;display:grid;place-items:center;background:#141B36"><div style="width:${s * 0.78}px;height:${s * 0.78}px;border-radius:50%;border:${s * 0.035}px solid #C9A24A;display:grid;place-items:center;font:700 ${s * 0.42}px 'Gowun Batang',serif;color:#F3E2B0">時</div></div>`, s, s, path.join(PUB, `icon-${s}.png`));
+  await shot(`<div style="width:${s}px;height:${s}px;display:grid;place-items:center;background:#FAF8F3"><div style="width:${s * 0.7}px;height:${s * 0.7}px;border-radius:${s * 0.12}px;background:#B3261E;display:grid;place-items:center;font:700 ${s * 0.46}px/1 'Noto Serif CJK KR',serif;color:#FFFFFF;padding-bottom:${s * 0.03}px;box-sizing:border-box">時</div></div>`, s, s, path.join(PUB, `icon-${s}.png`));
 }
-fs.writeFileSync(path.join(PUB, 'favicon.svg'), `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#141B36"/><circle cx="32" cy="32" r="23" fill="none" stroke="#C9A24A" stroke-width="3"/><path d="M32 32V13" stroke="#F3E2B0" stroke-width="4" stroke-linecap="round"/><circle cx="32" cy="32" r="4" fill="#F3E2B0"/></svg>`);
+fs.writeFileSync(path.join(PUB, 'favicon.svg'), `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#B3261E"/><text x="32" y="45" text-anchor="middle" font-family="'Noto Serif KR','Noto Serif CJK KR',serif" font-weight="700" font-size="38" fill="#FFFFFF">時</text></svg>`);
 await browser.close();
 fs.rmSync(path.join(ROOT, '.shot.html'), { force: true });

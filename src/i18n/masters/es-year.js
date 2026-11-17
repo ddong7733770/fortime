@@ -159,7 +159,7 @@ export default {
     'Un año son doce oportunidades. Recuerda tus meses buenos.',
     'El fuego del año de la Cabra Roja es una vela. En lugar de arder a lo grande, mantenla encendida mucho tiempo.',
   ],
-  card: { brand: 'forTime', site: 'fortuneintime.pages.dev', best: 'Mejores meses', color: 'Color de la suerte', saved: 'Tarjeta guardada.', making: 'Creando tu tarjeta…', shareText: '¿Mis palabras clave para 2027, el Año de la Cabra Roja?', shareBtn: 'Compartir', saveBtn: 'Guardar imagen', close: 'Cerrar', hold: 'También puedes mantener pulsada la imagen para guardarla.', saveHint: 'Toca «Guardar imagen» en el menú para guardarla en tus fotos.', fail: 'No se pudo crear la tarjeta. Inténtalo de nuevo en un momento.' },
+  card: { brand: 'forTime', site: 'fortime.kr', best: 'Mejores meses', color: 'Color de la suerte', saved: 'Tarjeta guardada.', making: 'Creando tu tarjeta…', shareText: '¿Mis palabras clave para 2027, el Año de la Cabra Roja?', shareBtn: 'Compartir', saveBtn: 'Guardar imagen', close: 'Cerrar', hold: 'También puedes mantener pulsada la imagen para guardarla.', saveHint: 'Toca «Guardar imagen» en el menú para guardarla en tus fotos.', fail: 'No se pudo crear la tarjeta. Inténtalo de nuevo en un momento.' },
   zodiacCta: 'Ver 2027 por signo del zodiaco',
   guestCta: 'Mi fortuna 2027 según mi saju',
   // Grupos de palabras clave para yearFortune (por grupo de Dioses Diez: 6 cuando ayuda · 6 cuando pesa)

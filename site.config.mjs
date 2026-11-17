@@ -1,11 +1,11 @@
 // forTime 사이트 설정 — 배포 전에 이 파일만 고치면 됩니다.
 export default {
   // 실제 구매한 도메인 (끝에 / 없이)
-  siteUrl: 'https://fortuneintime.pages.dev', // 도메인을 사면 그 주소(https://도메인)로 바꾸세요
+  siteUrl: 'https://fortime.kr', // 메인 도메인 (fortime.co.kr은 한국어 첫 화면 /ko/ 로 넘어감)
   brand: 'forTime',
 
   // 문의 이메일 (정책 페이지와 문의 페이지에 표시됨)
-  contactEmail: 'contact@fortuneintime.com',
+  contactEmail: 'contact@fortime.kr', // Cloudflare Email Routing으로 개인 메일에 전달
 
   // 애드센스: 승인 후 'ca-pub-XXXXXXXXXXXXXXXX' 형태로 입력. 비워 두면 광고 자리만 표시됩니다.
   adsense: {

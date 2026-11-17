@@ -159,7 +159,7 @@ export default {
     'A year is twelve chances. Remember your good months.',
     'The fire of the Red Goat year is a candle. Rather than burning big, keep it lit for long.',
   ],
-  card: { brand: 'forTime', site: 'fortuneintime.pages.dev', best: 'Best months', color: 'Lucky color', saved: 'Card saved.', making: 'Making your card…', shareText: 'My keywords for 2027, the Year of the Red Goat?', shareBtn: 'Share', saveBtn: 'Save image', close: 'Close', hold: 'You can also press and hold the image to save it.', saveHint: 'Tap “Save image” in the save sheet to save it to your photos.', fail: 'Couldn’t make the card. Please try again in a moment.' },
+  card: { brand: 'forTime', site: 'fortime.kr', best: 'Best months', color: 'Lucky color', saved: 'Card saved.', making: 'Making your card…', shareText: 'My keywords for 2027, the Year of the Red Goat?', shareBtn: 'Share', saveBtn: 'Save image', close: 'Close', hold: 'You can also press and hold the image to save it.', saveHint: 'Tap “Save image” in the save sheet to save it to your photos.', fail: 'Couldn’t make the card. Please try again in a moment.' },
   zodiacCta: 'See 2027 by zodiac sign',
   guestCta: 'My 2027 fortune from my saju',
   // Keyword pools for yearFortune (by Ten-God group: 6 when helpful · 6 when heavy)

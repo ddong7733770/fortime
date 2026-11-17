@@ -156,7 +156,7 @@ export default {
     '一年は十二回のチャンスです。良い月を覚えておいてください。',
     '丁未年の火はろうそくです。大きく燃やすより、長く灯してください。',
   ],
-  card: { brand: 'forTime', site: 'fortuneintime.pages.dev', best: '最高の月', color: 'ラッキーカラー', saved: 'カードを保存しました。', making: 'カードをつくっています…', shareText: '2027年丁未年、私のキーワードは？', shareBtn: 'シェアする', saveBtn: '画像を保存', close: '閉じる', hold: '画像を長押ししても保存できます。', saveHint: '保存画面で「画像を保存」を押すと、写真アプリ（ギャラリー）に保存されます。', fail: 'カードをつくれませんでした。少ししてからもう一度お試しください。' },
+  card: { brand: 'forTime', site: 'fortime.kr', best: '最高の月', color: 'ラッキーカラー', saved: 'カードを保存しました。', making: 'カードをつくっています…', shareText: '2027年丁未年、私のキーワードは？', shareBtn: 'シェアする', saveBtn: '画像を保存', close: '閉じる', hold: '画像を長押ししても保存できます。', saveHint: '保存画面で「画像を保存」を押すと、写真アプリ（ギャラリー）に保存されます。', fail: 'カードをつくれませんでした。少ししてからもう一度お試しください。' },
   zodiacCta: '干支別 2027年の運勢を見る',
   guestCta: '私の命式で見る2027年の運勢',
   kw: {

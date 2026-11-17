@@ -43,7 +43,7 @@ npm run dev        # 빌드 후 http://localhost:4321 에서 열림
 ## 배포 순서 (Cloudflare Pages)
 
 - GitHub 저장소: https://github.com/ddong7733770/fortuneintime
-- Cloudflare Pages 프로젝트 이름: `fortuneintime` → 기본 주소 https://fortuneintime.pages.dev (`site.config.mjs`의 `siteUrl`)
+- Cloudflare Pages 프로젝트 이름: `fortuneintime` → 기본 주소 https://fortuneintime.pages.dev, 실제 주소 https://fortime.kr (`site.config.mjs`의 `siteUrl`) · https://fortime.co.kr은 https://fortime.kr/ko/ 로 넘어감
 
 1. **GitHub에 올리기**: 이 폴더를 저장소에 올립니다 (`node_modules/`, `dist/`는 자동 제외).
    ```bash
@@ -107,7 +107,7 @@ npm run dev        # 빌드 후 http://localhost:4321 에서 열림
 
 **지도 종류**
 - `googleMapsKey`가 비어 있으면 내장 세계지도로 그립니다. 비용이 없고 지금 바로 동작합니다.
-- 구글 지도를 쓰려면 Google Cloud 콘솔에서 결제 계정을 연결하고 **Maps JavaScript API**를 켠 뒤 API 키를 만듭니다. 키의 **애플리케이션 제한**을 'HTTP 리퍼러'로 하고 `https://내도메인/*`, `https://fortuneintime.pages.dev/*`를 넣어 다른 곳에서 못 쓰게 막아 주세요. 그 키를 `site.config.mjs`의 `googleMapsKey`에 넣고 다시 빌드합니다.
+- 구글 지도를 쓰려면 Google Cloud 콘솔에서 결제 계정을 연결하고 **Maps JavaScript API**를 켠 뒤 API 키를 만듭니다. 키의 **애플리케이션 제한**을 'HTTP 리퍼러'로 하고 `https://fortime.kr/*`, `https://fortuneintime.pages.dev/*`를 넣어 다른 곳에서 못 쓰게 막아 주세요. 그 키를 `site.config.mjs`의 `googleMapsKey`에 넣고 다시 빌드합니다.
 - 구글 지도 불러오기에 실패하면 자동으로 내장 지도로 바뀝니다.
 
 **업로드 주의**: `dist` 폴더 안의 `_worker.js`와 `_routes.json`도 함께 올라가야 출발지가 접속 위치로 잡힙니다. `dist` 폴더를 통째로 끌어다 놓으면 함께 올라갑니다.

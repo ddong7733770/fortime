@@ -159,7 +159,7 @@ export default {
     'Setahun adalah dua belas peluang. Ingat bulan-bulan baikmu.',
     'Api tahun Kambing Merah adalah lilin. Daripada menyala besar, jaga agar tetap menyala lama.',
   ],
-  card: { brand: 'forTime', site: 'fortuneintime.pages.dev', best: 'Bulan terbaik', color: 'Warna keberuntungan', saved: 'Kartu tersimpan.', making: 'Membuat kartumu…', shareText: 'Kata kunciku untuk 2027, Tahun Kambing Merah?', shareBtn: 'Bagikan', saveBtn: 'Simpan gambar', close: 'Tutup', hold: 'Kamu juga bisa menekan lama gambarnya untuk menyimpan.', saveHint: 'Ketuk “Simpan gambar” di lembar simpan untuk menyimpannya ke galeri.', fail: 'Gagal membuat kartu. Coba lagi sebentar lagi.' },
+  card: { brand: 'forTime', site: 'fortime.kr', best: 'Bulan terbaik', color: 'Warna keberuntungan', saved: 'Kartu tersimpan.', making: 'Membuat kartumu…', shareText: 'Kata kunciku untuk 2027, Tahun Kambing Merah?', shareBtn: 'Bagikan', saveBtn: 'Simpan gambar', close: 'Tutup', hold: 'Kamu juga bisa menekan lama gambarnya untuk menyimpan.', saveHint: 'Ketuk “Simpan gambar” di lembar simpan untuk menyimpannya ke galeri.', fail: 'Gagal membuat kartu. Coba lagi sebentar lagi.' },
   zodiacCta: 'Lihat 2027 menurut shio',
   guestCta: 'Ramalan 2027-ku dari saju-ku',
   // Kumpulan kata kunci untuk yearFortune (per kelompok Sepuluh Dewa: 6 saat membantu · 6 saat berat)
