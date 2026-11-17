@@ -1292,6 +1292,9 @@ async function makeAndShowCard(btn, make, fname, shareText) {
 
 // 광고 창(미래 운세 결과 전): 배너 광고 + 5초 로딩 게이지 → 닫기(X) 버튼이 나타남
 function adGate(done) {
+  // 실제 광고가 켜지면 이 창은 쓰지 않음: 애드센스 정책상 광고 단위를 팝업·강제 대기 창에 넣을 수 없음
+  // (전면 광고는 애드센스 '자동 광고 → 전면 광고(비네트)'가 페이지 이동 사이에 대신 보여 줌)
+  if (D.ads.on && !isPreview()) { done(); return; }
   const ov = document.createElement('div');
   ov.className = 'adgate';
   ov.innerHTML = `<div class="adgate-box" role="dialog" aria-modal="true" aria-label="${esc(U.ad)}">
