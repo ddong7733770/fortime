@@ -156,8 +156,9 @@ ${alts ? alts.map(a => `<link rel="alternate" hreflang="${a.hl}" href="${SITE}${
 <meta property="og:locale" content="${Lc.ogLocale}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#FFFFFF">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="icon" href="/favicon.ico?v=3" sizes="32x32">
+<link rel="icon" href="/favicon.svg?v=3" type="image/svg+xml">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=${font}&display=swap">
@@ -548,7 +549,7 @@ ${pages.map(p => `<url><loc>${SITE}${p.loc}</loc><lastmod>${today}</lastmod>${p.
   const AI_BOTS = ['GPTBot', 'ChatGPT-User', 'OAI-SearchBot', 'ClaudeBot', 'Claude-Web', 'Claude-SearchBot', 'Claude-User', 'anthropic-ai', 'CCBot', 'Google-Extended', 'GoogleOther', 'Applebot-Extended', 'PerplexityBot', 'Perplexity-User', 'Bytespider', 'Amazonbot', 'meta-externalagent', 'meta-externalfetcher', 'FacebookBot', 'cohere-ai', 'cohere-training-data-crawler', 'Diffbot', 'ImagesiftBot', 'Omgilibot', 'Omgili', 'YouBot', 'AI2Bot', 'Ai2Bot-Dolma', 'DuckAssistBot', 'MistralAI-User', 'PetalBot', 'Timpibot', 'VelenPublicWebCrawler', 'Webzio-Extended', 'iaskspider', 'Kangaroo Bot', 'Scrapy', 'img2dataset', 'TikTokSpider', 'Brightbot'];
   write('robots.txt', `${AI_BOTS.map(b => `User-agent: ${b}\nDisallow: /\n`).join('\n')}\nUser-agent: *\nAllow: /\nDisallow: /*/result/\nDisallow: /api/\n\nSitemap: ${SITE}/sitemap.xml\n`);
   if (ADS.client) write('ads.txt', `google.com, ${ADS.client.replace(/^ca-/, '')}, DIRECT, f08c47fec0942fa0\n`);
-  write('manifest.webmanifest', JSON.stringify({ name: `${BRAND} 시운`, short_name: BRAND, id: '/', start_url: '/?source=home', scope: '/', display: 'standalone', lang: 'ko', description: 'Your fortune, hour by hour', background_color: '#FFFFFF', theme_color: '#FFFFFF', icons: [{ src: '/icon-192.png', sizes: '192x192', type: 'image/png' }, { src: '/icon-512.png', sizes: '512x512', type: 'image/png' }] }));
+  write('manifest.webmanifest', JSON.stringify({ name: `${BRAND} 시운`, short_name: BRAND, id: '/', start_url: '/?source=home', scope: '/', display: 'standalone', lang: 'ko', description: 'Your fortune, hour by hour', background_color: '#FFFFFF', theme_color: '#FFFFFF', icons: [{ src: '/icon-192.png?v=3', sizes: '192x192', type: 'image/png' }, { src: '/icon-512.png?v=3', sizes: '512x512', type: 'image/png' }] }));
   write('_headers', `/assets/*\n  Cache-Control: public, max-age=86400\n/images/*\n  Cache-Control: public, max-age=86400\n/sw.js\n  Cache-Control: no-cache\n/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Robots-Tag: noai, noimageai\n`);
   write('404.html', `${head({ lang: 'ko', title: `404 | ${BRAND}`, desc: L.ko.siteDesc, canonical: '/404', noindex: true })}
 <body class="page-root"><main class="root-wrap"><h1 class="root-title"><span class="wordmark">${esc(BRAND)}</span></h1><p class="root-tag">404</p>
